@@ -20,7 +20,7 @@ const userReducer = createSlice({
 export function oderProduct(order: any, id: number) {
   return async (dispatch: any) => {
     await axios
-      .put(`http://localhost:4000/order`, {
+      .put(`https://tesk3server.herokuapp.com/order`, {
         order: order,
         id: id,
       })

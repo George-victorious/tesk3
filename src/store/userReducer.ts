@@ -69,7 +69,7 @@ const userReducer = createSlice({
 export function loginCurrentUser(email: string, password: string) {
   return async (dispatch: any) => {
     await axios
-      .get(`http://localhost:4000/login?email=${email}&password=${password}`)
+      .get(`https://tesk3server.herokuapp.com/login?email=${email}&password=${password}`)
       .then((res) => {
         dispatch(setUser(res.data.user));
       })
@@ -80,7 +80,7 @@ export function loginCurrentUser(email: string, password: string) {
 export function registryCurrentUser(user: any) {
   return async (dispatch: any) => {
     await axios
-      .put(`http://localhost:4000/registry`, {
+      .put(`https://tesk3server.herokuapp.com/registry`, {
         user: user,
       })
       .then((res) => {

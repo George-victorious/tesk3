@@ -33,7 +33,7 @@ const userReducer = createSlice({
 export function fetchUsers() {
   return async (dispatch: any) => {
     await axios
-      .get(`http://localhost:4000/users`)
+      .get(`https://tesk3server.herokuapp.com/users`)
       .then((res) => {
         dispatch(setUsers(res.data.users));
       })
@@ -44,7 +44,7 @@ export function fetchUsers() {
 export function fetchUserBuys(id: number) {
   return async (dispatch: any) => {
     await axios
-      .get(`http://localhost:4000/buylist?id=${id}`)
+      .get(`https://tesk3server.herokuapp.com/buylist?id=${id}`)
       .then((res) => {
         dispatch(setUserBuys(res.data.buyList));
       })
