@@ -1,10 +1,17 @@
+.login-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .popup-container {
   padding: 20px;
-  margin: 50px auto;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 500px;
   border-radius: 25px;
+  background-color: #fff;
   box-shadow: 3px 3px 3px 3px #00000033;
 }

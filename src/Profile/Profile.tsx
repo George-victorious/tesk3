@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../Header';
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 
@@ -14,12 +13,9 @@ const Profile = () => {
 
   return (
     <>
-      {console.log(form)}
-      <Header />
       <Typography.Title level={4}>Мой профиль</Typography.Title>
-      <Typography.Text>Личные данные</Typography.Text>
       <Form initialValues={form} onValuesChange={onValuesChange} layout={'vertical'}>
-        <Space direction={'vertical'} size={5}>
+        <Space direction={'vertical'} size={0}>
           <Space direction={'horizontal'} size={10}>
             <Form.Item label='Имя' name={'firstName'} required>
               <Input placeholder={'Имя'} />

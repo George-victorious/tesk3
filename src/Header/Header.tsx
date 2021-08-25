@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.scss';
-import {Redirect, useLocation, withRouter} from 'react-router-dom';
+import { Redirect, useLocation, withRouter } from 'react-router-dom';
 
 import logo from '../assets/logo.png';
 import { Button, Tabs } from 'antd';
@@ -38,25 +38,34 @@ const Header = (props: any) => {
 
   return (
     <div className={'header'}>
-      <img className={'logo'} src={logo} alt={'logo'} />
-      {user && (
-        <>
-          <div>
-            <Tabs activeKey={location.pathname} onChange={changePage}>
-              <Tabs.TabPane tab='Home' key='/' />
-              <Tabs.TabPane tab='Admin' key='/admin' />
-              <Tabs.TabPane tab='Order' key='/order' />
-              <Tabs.TabPane tab='Profile' key='/profile' />
-            </Tabs>
-          </div>
-          <Button
-            type={'primary'}
-            shape={'circle'}
-            icon={<LogoutOutlined />}
-            onClick={logout}
-          />
-        </>
-      )}
+      <div className={'header-content'}>
+        <img className={'logo'} src={logo} alt={'logo'} />
+        {user && (
+          <>
+            <div className={'nav-buttons'}>
+              <Tabs
+                tabBarStyle={{
+                  margin: 0,
+                }}
+                tabPosition={'bottom'}
+                activeKey={location.pathname}
+                onChange={changePage}
+              >
+                <Tabs.TabPane tab='Home' key='/' />
+                {user.role === 'admin' && <Tabs.TabPane tab='Admin' key='/admin' />}
+                <Tabs.TabPane tab='Order' key='/order' />
+                <Tabs.TabPane tab='Profile' key='/profile' />
+              </Tabs>
+            </div>
+            <Button
+              type={'primary'}
+              shape={'circle'}
+              icon={<LogoutOutlined />}
+              onClick={logout}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };

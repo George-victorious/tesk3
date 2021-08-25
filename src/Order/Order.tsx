@@ -1,4 +1,3 @@
-import Header from '../Header';
 import { useState } from 'react';
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { oderProduct } from '../store/orderReducer';
@@ -29,16 +28,16 @@ const points = [
     city: 'Minsk',
     address: 'Hikalo 16',
     location: {
-      lat: 0,
-      lng: 0,
+      lat: 53.9046755,
+      lng: 27.5520775,
     },
   },
   {
     city: 'Moscow',
     address: 'Arbat 1',
     location: {
-      lat: 0,
-      lng: 0,
+      lat: 55.751813,
+      lng: 37.5971054,
     },
   },
 ];
@@ -79,16 +78,17 @@ const Order = () => {
   if (order && stage === 4) {
     return (
       <>
-        <Header />
         <Typography.Title level={3}>Ваш заказ</Typography.Title>
-        <Space direction={'vertical'} size={3}>
-          <Typography.Text>Вы заказали: {form.productName}</Typography.Text>
-          <Typography.Text>Цена товара составляет: {form.price}</Typography.Text>
-          <Typography.Text>
-            Ваш комментарий к заказу: {form.description}
-          </Typography.Text>
+        <Space direction={'horizontal'} size={3} style={{alignItems: 'flex-start'}}>
+          <Space direction={'vertical'} size={3}>
+            <Typography.Text>Вы заказали: {form.productName}</Typography.Text>
+            <Typography.Text>Цена товара составляет: {form.price}</Typography.Text>
+            <Typography.Text>
+              Ваш комментарий к заказу: {form.description}
+            </Typography.Text>
+          </Space>
+          <Map />
         </Space>
-        <Map />
       </>
     );
   }
@@ -99,7 +99,6 @@ const Order = () => {
 
   return (
     <>
-      <Header />
       {stage === 1 ? (
         <Form
           onValuesChange={onFormLayoutChange}

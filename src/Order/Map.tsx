@@ -5,8 +5,8 @@ import 'antd/dist/antd.css';
 import { useSelector } from 'react-redux';
 
 const containerStyle = {
-  width: '500px',
-  height: '680px',
+  width: '700px',
+  height: '300px',
 };
 
 const libraries: Libraries = ['drawing', 'geometry', 'places'];
@@ -21,7 +21,7 @@ const Map = () => {
   const { city, address, location } = orderInfo.deleveredFrom;
   const deliverTO = {
     info: orderInfo.city + ', ' + orderInfo.address,
-    location: { lat: orderInfo.lat, lng: orderInfo.lng },
+    location: { lat: +orderInfo.lat, lng: +orderInfo.lng },
   };
   const deliverFrom = {
     info: city + ', ' + address,
@@ -38,7 +38,7 @@ const Map = () => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={deliverTO.location}
-      zoom={6}
+      zoom={3}
     >
       <Marker position={deliverTO.location} />
       <Marker position={deliverFrom.location} />

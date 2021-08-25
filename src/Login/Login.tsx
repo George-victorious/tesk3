@@ -3,7 +3,6 @@ import { Button, Input } from 'antd';
 import { loginCurrentUser } from '../store/userReducer';
 import { useDispatch } from 'react-redux';
 import './Login.scss';
-import Header from '../Header';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
@@ -12,8 +11,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <Header />
+    <div className={'login-container'}>
       <div className={'popup-container'}>
         <Input
           placeholder={'email'}
@@ -35,7 +33,7 @@ const Login = () => {
           <Link to={'/registration'}>Create account</Link>
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

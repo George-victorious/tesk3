@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Header from '../Header';
 import { useParams } from 'react-router-dom';
 import { fetchUserBuys } from '../store/buysReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,12 +57,7 @@ const AdminUserBuys = () => {
     dispatch(fetchUserBuys(userId));
   }, [dispatch]);
 
-  return (
-    <>
-      <Header />
-      <Table loading={!userBuys} dataSource={userBuys} columns={columns} />
-    </>
-  );
+  return <Table loading={!userBuys} dataSource={userBuys} columns={columns} />;
 };
 
 export default AdminUserBuys;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserBuys } from '../store/buysReducer';
 import Text from 'antd/lib/typography/Text';
@@ -56,22 +55,27 @@ const UserBuys = () => {
 
   return (
     <>
-      <Header />
       {userBuys ? (
         userBuys.map((buy: any) => (
           <Card
-            style={!isOpen.id !== buy.id ? { cursor: 'pointer' } : undefined}
+            style={{
+              cursor: isOpen.id !== buy.id ? 'pointer' : 'default',
+              margin: '10px auto',
+              width: '500px'
+            }}
             bordered={false}
             key={'order' + buy.id}
             onClick={() => openDesc(buy.id)}
           >
             {isOpen.id === buy.id ? (
               <>
-                <CloseCircleTwoTone
-                  onClick={closeDesc}
-                  twoToneColor={'red'}
-                  style={{ margin: '4px 0' }}
-                />
+                <div className={'card-item'}>
+                  <CloseCircleTwoTone
+                    onClick={closeDesc}
+                    twoToneColor={'red'}
+                    style={{ margin: '4px 0 4px auto' }}
+                  />
+                </div>
                 <div className={'card-item'}>
                   <Text>Дата</Text>
                   <Text>{normalizeDate(buy.created)}</Text>
@@ -108,9 +112,15 @@ const UserBuys = () => {
                     </div>
                   </>
                 )}
-                <Button type={'primary'} onClick={openHideDescFully}>
-                  {isOpen.isFullOpen ? 'Скрыть описание' : 'Подробнее'}
-                </Button>
+                <div className={'card-item'}>
+                  <Button
+                    type={'primary'}
+                    onClick={openHideDescFully}
+                    style={{ margin: '5px 0 0 auto' }}
+                  >
+                    {isOpen.isFullOpen ? 'Скрыть описание' : 'Подробнее'}
+                  </Button>
+                </div>
               </>
             ) : (
               <div className={'card-header'}>

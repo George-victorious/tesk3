@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Header from '../Header';
 import { List } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, unsetUserBuys } from '../store/buysReducer';
@@ -21,7 +20,6 @@ const AdminPage = (props: any) => {
 
   return (
     <>
-      <Header />
       {users ? (
         <List
           itemLayout='horizontal'

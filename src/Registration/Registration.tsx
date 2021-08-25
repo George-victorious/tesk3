@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import Header from '../Header';
 import { Button, Input } from 'antd';
 import { registryCurrentUser } from '../store/userReducer';
 import { useDispatch } from 'react-redux';
@@ -40,28 +39,27 @@ const Registration = () => {
   }, [newUser]);
 
   return (
-    <>
-      <Header />
+    <div className={'login-container'}>
       <div className={'popup-container'}>
-        {inputList.map((input: any) => (
-          <Input
-            key={'input' + input.ph}
-            placeholder={input.ph}
-            value={input.value}
-            onChange={input.action}
-          />
-        ))}
-        <Button
-          type={'primary'}
-          onClick={() => dispatch(registryCurrentUser(newUser))}
-        >
-          Create account
-        </Button>
-        <Button type={'default'}>
-          <Link to={'/login'}>I have an account</Link>
-        </Button>
+          {inputList.map((input: any) => (
+            <Input
+              key={'input' + input.ph}
+              placeholder={input.ph}
+              value={input.value}
+              onChange={input.action}
+            />
+          ))}
+          <Button
+            type={'primary'}
+            onClick={() => dispatch(registryCurrentUser(newUser))}
+          >
+            Create account
+          </Button>
+          <Button type={'default'}>
+            <Link to={'/login'}>I have an account</Link>
+          </Button>
       </div>
-    </>
+    </div>
   );
 };
 
