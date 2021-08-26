@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, Select, Space, Typography } from 'antd';
+import { Button, Form, Input, Select, Space, Steps, Typography } from 'antd';
 import { oderProduct } from '../store/orderReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Map from './Map';
@@ -23,6 +23,23 @@ import Map from './Map';
 //   };
 // };
 
+const { Step } = Steps;
+
+const steps = [
+  {
+    title: 'Product choose',
+    description: 'Product info',
+  },
+  {
+    title: 'Choose location',
+    description: 'Delivery info',
+  },
+  {
+    title: 'Contacts',
+    description: 'Contact info',
+  },
+];
+
 const points = [
   {
     city: 'Minsk',
@@ -45,7 +62,6 @@ const points = [
 const Order = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state: any) => state.user.user?.id);
-  const order = useSelector((state: any) => state.order.order);
   const [stage, setStage] = useState(1);
   const [form, setForm] = useState<any>({
     productName: '',
@@ -75,23 +91,6 @@ const Order = () => {
     dispatch(oderProduct(form, userId));
   };
 
-  if (order && stage === 4) {
-    return (
-      <>
-        <Typography.Title level={3}>Ваш заказ</Typography.Title>
-        <Space direction={'horizontal'} size={3} style={{alignItems: 'flex-start'}}>
-          <Space direction={'vertical'} size={3}>
-            <Typography.Text>Вы заказали: {form.productName}</Typography.Text>
-            <Typography.Text>Цена товара составляет: {form.price}</Typography.Text>
-            <Typography.Text>
-              Ваш комментарий к заказу: {form.description}
-            </Typography.Text>
-          </Space>
-          <Map />
-        </Space>
-      </>
-    );
-  }
   const onChangeDeliverFrom = (value: any) => {
     const point = points.filter((point) => point.city + point.address === value)[0];
     setForm((form: any) => ({ ...form, deleveredFrom: point }));
@@ -99,6 +98,11 @@ const Order = () => {
 
   return (
     <>
+      <Steps current={stage - 1} style={{ marginBottom: '20px' }}>
+        {steps.map((item) => (
+          <Step key={item.title} title={item.title} description={item.description} />
+        ))}
+      </Steps>
       {stage === 1 ? (
         <Form
           onValuesChange={onFormLayoutChange}
@@ -178,7 +182,7 @@ const Order = () => {
             <Button htmlType='submit'>Далее</Button>
           </Form.Item>
         </Form>
-      ) : (
+      ) : stage === 3 ? (
         <Form
           onValuesChange={onFormLayoutChange}
           initialValues={form}
@@ -199,6 +203,24 @@ const Order = () => {
             <Button htmlType='submit'>Заказать</Button>
           </Form.Item>
         </Form>
+      ) : (
+        <>
+          <Typography.Title level={3}>Ваш заказ</Typography.Title>
+          <Space
+            direction={'horizontal'}
+            size={3}
+            style={{ alignItems: 'flex-start' }}
+          >
+            <Space direction={'vertical'} size={3}>
+              <Typography.Text>Вы заказали: {form.productName}</Typography.Text>
+              <Typography.Text>Цена товара составляет: {form.price}</Typography.Text>
+              <Typography.Text>
+                Ваш комментарий к заказу: {form.description}
+              </Typography.Text>
+            </Space>
+            <Map />
+          </Space>
+        </>
       )}
     </>
   );
