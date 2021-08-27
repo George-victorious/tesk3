@@ -14,7 +14,7 @@ const Profile = () => {
         form={form}
         initialValues={user}
         layout={'vertical'}
-        onFinish={() => console.log(form.getFieldsValue())}
+        onFinish={() => null}
       >
         <Space direction={'vertical'} size={0}>
           <Space direction={'horizontal'} size={10}>

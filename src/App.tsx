@@ -1,5 +1,4 @@
 import React from 'react';
-import history from 'history/browser';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import Login from './components/Login';
 import AdminPage from './components/AdminPage';
@@ -27,7 +26,6 @@ import {
 
 function App() {
   const user = useSelector(getUser);
-  console.log(history);
 
   return (
     <BrowserRouter>
