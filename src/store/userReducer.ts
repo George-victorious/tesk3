@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {} from './types';
 import axios from 'axios';
+import { loginRoute, registrationRoute } from '../variables/serverRequests';
 
 // const serverUsers = [
 //   {
@@ -69,7 +70,7 @@ const userReducer = createSlice({
 export function loginCurrentUser(email: string, password: string) {
   return async (dispatch: any) => {
     await axios
-      .get(`https://tesk3server.herokuapp.com/login?email=${email}&password=${password}`)
+      .get(loginRoute + `?email=${email}&password=${password}`)
       .then((res) => {
         dispatch(setUser(res.data.user));
       })
@@ -80,7 +81,7 @@ export function loginCurrentUser(email: string, password: string) {
 export function registryCurrentUser(user: any) {
   return async (dispatch: any) => {
     await axios
-      .put(`https://tesk3server.herokuapp.com/registry`, {
+      .put(registrationRoute, {
         user: user,
       })
       .then((res) => {

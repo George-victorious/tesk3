@@ -3,6 +3,7 @@ import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import 'antd/dist/antd.css';
 import { useSelector } from 'react-redux';
+import { getOrder } from '../../store/selectors';
 
 const containerStyle = {
   width: '700px',
@@ -17,7 +18,7 @@ const Map = () => {
     libraries: libraries,
   });
 
-  const orderInfo = useSelector((state: any) => state.order.order);
+  const orderInfo = useSelector(getOrder);
   const { city, address, location } = orderInfo.deleveredFrom;
   const deliverTO = {
     info: orderInfo.city + ', ' + orderInfo.address,

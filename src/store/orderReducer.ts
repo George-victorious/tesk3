@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { orderRoute } from '../variables/serverRequests';
 
 const initialState: any = {
   order: null,
@@ -20,7 +21,7 @@ const userReducer = createSlice({
 export function oderProduct(order: any, id: number) {
   return async (dispatch: any) => {
     await axios
-      .put(`https://tesk3server.herokuapp.com/order`, {
+      .put(orderRoute, {
         order: order,
         id: id,
       })

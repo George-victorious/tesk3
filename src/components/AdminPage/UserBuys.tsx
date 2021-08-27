@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserBuys } from '../store/buysReducer';
+import { fetchUserBuys } from '../../store/buysReducer';
 import Text from 'antd/lib/typography/Text';
 import { Button, Card } from 'antd';
 import './UserBuys.scss';
 import { CloseCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
+import { getBuys, getUserId } from '../../store/selectors';
 
 const UserBuys = () => {
   type TIsOpen = {
@@ -31,8 +32,8 @@ const UserBuys = () => {
   };
 
   const dispatch = useDispatch();
-  const id = useSelector((state: any) => state.user.user?.id);
-  const userBuys = useSelector((state: any) => state.buys.userBuys);
+  const id = useSelector(getUserId);
+  const userBuys = useSelector(getBuys);
 
   useEffect(() => {
     dispatch(fetchUserBuys(id));
@@ -61,7 +62,7 @@ const UserBuys = () => {
             style={{
               cursor: isOpen.id !== buy.id ? 'pointer' : 'default',
               margin: '10px auto',
-              width: '500px'
+              width: '500px',
             }}
             bordered={false}
             key={'order' + buy.id}
@@ -82,7 +83,7 @@ const UserBuys = () => {
                 </div>
                 <div className={'card-item'}>
                   <Text>Статус</Text>
-                  <Text>{getStatus(buy.status)}</Text>
+                  <>{getStatus(buy.status)}</>
                 </div>
                 <div className={'card-item'}>
                   <Text>Сумма</Text>

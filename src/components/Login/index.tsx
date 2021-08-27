@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { Button, Form, Input } from 'antd';
-import { loginCurrentUser } from '../store/userReducer';
+import React from 'react';
+import { Button, Form, Input, Typography } from 'antd';
+import { loginCurrentUser } from '../../store/userReducer';
 import { useDispatch } from 'react-redux';
 import './Login.scss';
 import { Link } from 'react-router-dom';
+import { useForm } from 'antd/lib/form/Form';
 
 const Login = () => {
-  const [email, setEmail] = useState('georgi.filipov@com');
-  const [password, setPassword] = useState('qwerty1');
+  const [form] = useForm();
+  const email = 'georgi.filipov@com';
+  const password = 'qwerty1';
   const dispatch = useDispatch();
-
-  const onValueChange = ({ email, password }: any) => {
-    email === undefined ? setPassword(password) : setEmail(email);
-  };
 
   return (
     <div className={'login-container'}>
       <div className={'popup-container'}>
+        <Typography.Text>alex.sabadash@com asdfgh2 - admin</Typography.Text>
+        <Typography.Text>georgi.filipov@com qwerty1 - user</Typography.Text>
         <Form
+          form={form}
           initialValues={{ email: email, password: password }}
-          onValuesChange={onValueChange}
-          onFinish={() => dispatch(loginCurrentUser(email, password))}
+          onFinish={(form) => dispatch(loginCurrentUser(form.email, form.password))}
         >
           <Form.Item
             key={'email'}
@@ -28,6 +28,8 @@ const Login = () => {
             rules={[
               {
                 required: true,
+                min: 5,
+                max: 25,
               },
             ]}
           >
@@ -39,13 +41,15 @@ const Login = () => {
             rules={[
               {
                 required: true,
+                min: 5,
+                max: 25,
               },
             ]}
           >
             <Input placeholder={'password'} />
           </Form.Item>
           <Form.Item>
-            <Button style={{ width: '100%' }} type={'primary'} htmlType={'submit'}>
+            <Button type={'primary'} htmlType={'submit'}>
               Login
             </Button>
           </Form.Item>

@@ -1,36 +1,22 @@
 import React from 'react';
 import './Header.scss';
-import { Redirect, useLocation, withRouter } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
 
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { Button, Tabs } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { unsetUser } from '../store/userReducer';
+import { unsetUser } from '../../store/userReducer';
+import { getUser } from '../../store/selectors';
 
 const Header = (props: any) => {
-  const user = useSelector((state: any) => state.user.user);
+  const user = useSelector(getUser);
   const location = useLocation();
   const dispatch = useDispatch();
 
   const logout = () => {
     dispatch(unsetUser());
   };
-
-  if (
-    !user &&
-    location.pathname !== '/login' &&
-    location.pathname !== '/registration'
-  ) {
-    return <Redirect to={'/login'} />;
-  }
-
-  if (
-    user &&
-    (location.pathname === '/login' || location.pathname === '/registration')
-  ) {
-    return <Redirect to={'/'} />;
-  }
 
   const changePage = (location: string) => {
     props.history.push(location);

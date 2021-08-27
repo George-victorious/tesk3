@@ -1,31 +1,25 @@
 import { useState } from 'react';
 import { Button, Form, Input, Select, Space, Steps, Typography } from 'antd';
-import { oderProduct } from '../store/orderReducer';
+import { oderProduct } from '../../store/orderReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Map from './Map';
+import { getOrder, getUserId } from '../../store/selectors';
+import { useForm } from 'antd/lib/form/Form';
 
-// type TFormData = {
-//   productName: string;
-//   price: number;
-//   city: string;
-//   address: string;
-//   lat: number;
-//   lng: number;
-//   description: string;
-//   phone: string;
-//   deleveredFrom: {
-//     city: string;
-//     address: string;
-//     location: {
-//       lat: number;
-//       lng: number;
-//     };
-//   };
-// };
+type TSteps = {
+  title: string;
+  description: string;
+};
+type TPoints = {
+  city: string;
+  address: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+};
 
-const { Step } = Steps;
-
-const steps = [
+const steps: TSteps[] = [
   {
     title: 'Product choose',
     description: 'Product info',
@@ -40,7 +34,7 @@ const steps = [
   },
 ];
 
-const points = [
+const points: TPoints[] = [
   {
     city: 'Minsk',
     address: 'Hikalo 16',
@@ -60,54 +54,72 @@ const points = [
 ];
 
 const Order = () => {
-  const dispatch = useDispatch();
-  const userId = useSelector((state: any) => state.user.user?.id);
+  const { Step } = Steps;
+  const [form] = useForm();
   const [stage, setStage] = useState(1);
-  const [form, setForm] = useState<any>({
-    productName: '',
+  const [orderData, setOrderData] = useState<any>({});
+  const dispatch = useDispatch();
+  const userId = useSelector(getUserId);
+  const order = useSelector(getOrder);
+  const initialValues = {
+    productName: 'qweq',
     price: 0,
-    city: '',
-    address: '',
+    city: 'qwe',
+    address: 'qwe',
     lat: 0,
     lng: 0,
-    description: '',
-    phone: '',
+    description: 'qwe',
+    phone: '123',
     deleveredFrom: {
-      city: '',
-      address: '',
+      city: 'qwe',
+      address: 'qwe',
       location: {
         lat: 0,
         lng: 0,
       },
     },
-  });
-  const onFormLayoutChange = (fullForm: any) => {
-    const valueKey = Object.keys(fullForm)[0];
-    const value = fullForm[valueKey];
-    setForm((form: any) => ({ ...form, [valueKey]: value }));
-  };
-  const onFinish = () => {
-    setStage((stage) => stage + 1);
-    dispatch(oderProduct(form, userId));
   };
 
   const onChangeDeliverFrom = (value: any) => {
     const point = points.filter((point) => point.city + point.address === value)[0];
-    setForm((form: any) => ({ ...form, deleveredFrom: point }));
+    setOrderData({ ...orderData, deleveredFrom: point });
+  };
+
+  const toNewStage = (values: any) => {
+    setOrderData({
+      ...orderData,
+      ...values,
+    });
+    setStage(stage + 1);
+  };
+
+  const onFinish = (values: any) => {
+    setOrderData({
+      ...orderData,
+      ...values,
+    });
+    dispatch(oderProduct(orderData, userId));
+    setStage((stage) => stage + 1);
   };
 
   return (
     <>
-      <Steps current={stage - 1} style={{ marginBottom: '20px' }}>
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} description={item.description} />
-        ))}
-      </Steps>
+      {!order && (
+        <Steps current={stage - 1} style={{ marginBottom: '20px' }}>
+          {steps.map((item) => (
+            <Step
+              key={item.title}
+              title={item.title}
+              description={item.description}
+            />
+          ))}
+        </Steps>
+      )}
       {stage === 1 ? (
         <Form
-          onValuesChange={onFormLayoutChange}
-          initialValues={form}
-          onFinish={() => setStage((state) => state + 1)}
+          form={form}
+          initialValues={initialValues}
+          onFinish={toNewStage}
           layout='vertical'
         >
           <Form.Item
@@ -130,9 +142,9 @@ const Order = () => {
         </Form>
       ) : stage === 2 ? (
         <Form
-          onValuesChange={onFormLayoutChange}
-          initialValues={form}
-          onFinish={() => setStage((state) => state + 1)}
+          form={form}
+          initialValues={initialValues}
+          onFinish={toNewStage}
           layout='vertical'
         >
           <Form.Item
@@ -184,8 +196,8 @@ const Order = () => {
         </Form>
       ) : stage === 3 ? (
         <Form
-          onValuesChange={onFormLayoutChange}
-          initialValues={form}
+          form={form}
+          initialValues={initialValues}
           onFinish={onFinish}
           layout='vertical'
         >
@@ -205,21 +217,27 @@ const Order = () => {
         </Form>
       ) : (
         <>
-          <Typography.Title level={3}>Ваш заказ</Typography.Title>
-          <Space
-            direction={'horizontal'}
-            size={3}
-            style={{ alignItems: 'flex-start' }}
-          >
-            <Space direction={'vertical'} size={3}>
-              <Typography.Text>Вы заказали: {form.productName}</Typography.Text>
-              <Typography.Text>Цена товара составляет: {form.price}</Typography.Text>
-              <Typography.Text>
-                Ваш комментарий к заказу: {form.description}
-              </Typography.Text>
-            </Space>
-            <Map />
-          </Space>
+          {order && (
+            <>
+              <Typography.Title level={3}>Ваш заказ</Typography.Title>
+              <Space
+                direction={'vertical'}
+                size={10}
+                style={{ alignItems: 'flex-start' }}
+              >
+                <Space direction={'vertical'} size={3}>
+                  <Typography.Text>Вы заказали: {order.productName}</Typography.Text>
+                  <Typography.Text>
+                    Цена товара составляет: {order.price}
+                  </Typography.Text>
+                  <Typography.Text>
+                    Ваш комментарий к заказу: {order.description}
+                  </Typography.Text>
+                </Space>
+                <Map />
+              </Space>
+            </>
+          )}
         </>
       )}
     </>

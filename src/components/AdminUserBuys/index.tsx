@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchUserBuys } from '../store/buysReducer';
+import { fetchUserBuys } from '../../store/buysReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import Text from 'antd/lib/typography/Text';
+import { getBuys } from '../../store/selectors';
 
 const AdminUserBuys = () => {
   const dispatch = useDispatch();
   const { userId }: any = useParams();
-  const userBuys = useSelector((state: any) => state.buys.userBuys);
+  const userBuys = useSelector(getBuys);
   const columns = [
     {
       title: 'Товар',

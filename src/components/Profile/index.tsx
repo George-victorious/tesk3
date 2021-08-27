@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { getUser } from '../../store/selectors';
 
 const Profile = () => {
-  const user = useSelector((state: any) => state.user.user);
-  const [form, setForm] = useState(user);
-
-  const onValuesChange = (formValue: any) => {
-    const key = Object.keys(formValue)[0];
-    setForm((form: any) => ({ ...form, [key]: formValue[key] }));
-  };
+  const user = useSelector(getUser);
+  const [form] = Form.useForm();
 
   return (
     <>
       <Typography.Title level={4}>Мой профиль</Typography.Title>
-      <Form initialValues={form} onValuesChange={onValuesChange} layout={'vertical'}>
+      <Form
+        form={form}
+        initialValues={user}
+        layout={'vertical'}
+        onFinish={() => console.log(form.getFieldsValue())}
+      >
         <Space direction={'vertical'} size={0}>
           <Space direction={'horizontal'} size={10}>
             <Form.Item label='Имя' name={'firstName'} required>

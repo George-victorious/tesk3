@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { List } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, unsetUserBuys } from '../store/buysReducer';
+import { fetchUsers, unsetUserBuys } from '../../store/buysReducer';
 import { withRouter } from 'react-router-dom';
+import { getUsers } from '../../store/selectors';
 
 const AdminPage = (props: any) => {
-  const users = useSelector((state: any) => state.buys.users);
+  const users = useSelector(getUsers);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());

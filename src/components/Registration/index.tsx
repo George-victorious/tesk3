@@ -1,12 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Button, Form, Input } from 'antd';
-import { registryCurrentUser } from '../store/userReducer';
+import { registryCurrentUser } from '../../store/userReducer';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from 'antd/lib/form/Form';
 
 const Registration = () => {
   const dispatch = useDispatch();
-  const [newUser, setNewUser] = useState<any>({
+  const [form] = useForm();
+  const newUser = {
     firstName: '',
     middleName: '',
     lastName: '',
@@ -14,7 +16,7 @@ const Registration = () => {
     email: '',
     password: '',
     passwordConfirm: '',
-  });
+  };
 
   const placeholders: any = {
     firstName: 'First name',
@@ -28,33 +30,35 @@ const Registration = () => {
 
   const inputList = useMemo(() => {
     const inputList: any = [];
-    for (const [key, value] of Object.entries(newUser)) {
+    for (const [key] of Object.entries(placeholders)) {
       inputList.push({
         ph: placeholders[key],
-        value: value,
         key: key,
-        action: (e: any) => setNewUser({ ...newUser, [key]: e.target.value }),
       });
     }
     return inputList;
   }, [newUser]);
 
-  const onRegChange = (fullForm: any) => {
-    const valueKey = Object.keys(fullForm)[0];
-    const value = fullForm[valueKey];
-    setNewUser((newUser: any) => ({ ...newUser, [valueKey]: value }));
-  };
-
   return (
     <div className={'login-container'}>
       <div className={'popup-container'}>
         <Form
+          form={form}
           initialValues={newUser}
-          onValuesChange={onRegChange}
-          onFinish={() => dispatch(registryCurrentUser(newUser))}
+          onFinish={(form) => dispatch(registryCurrentUser(form))}
         >
           {inputList.map((input: any, index: number) => (
-            <Form.Item key={input.key} name={input.key}>
+            <Form.Item
+              key={input.key}
+              name={input.key}
+              rules={[
+                {
+                  required: true,
+                  min: 5,
+                  max: 25,
+                },
+              ]}
+            >
               {index < 5 ? (
                 <Input placeholder={input.ph} />
               ) : (

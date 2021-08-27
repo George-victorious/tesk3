@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import {buyListRoute, usersRoute} from "../variables/serverRequests";
 
 type TInitStateCurUserReducer = {
   users: null | any[];
@@ -33,7 +34,7 @@ const userReducer = createSlice({
 export function fetchUsers() {
   return async (dispatch: any) => {
     await axios
-      .get(`https://tesk3server.herokuapp.com/users`)
+      .get(usersRoute)
       .then((res) => {
         dispatch(setUsers(res.data.users));
       })
@@ -44,7 +45,7 @@ export function fetchUsers() {
 export function fetchUserBuys(id: number) {
   return async (dispatch: any) => {
     await axios
-      .get(`https://tesk3server.herokuapp.com/buylist?id=${id}`)
+      .get(buyListRoute + `?id=${id}`)
       .then((res) => {
         dispatch(setUserBuys(res.data.buyList));
       })
