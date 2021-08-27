@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {} from './types';
 import axios from 'axios';
-import { loginRoute, registrationRoute } from '../variables/serverRequests';
+import {
+  loginRoute,
+  registrationRoute,
+  userRoute,
+} from '../variables/serverRequests';
 
 // const serverUsers = [
 //   {
@@ -66,6 +70,17 @@ const userReducer = createSlice({
     },
   },
 });
+
+export function editCurrentUser(user: any) {
+  return async (dispatch: any) => {
+    await axios
+      .post(userRoute, user
+      )
+      .then((res) => {
+        dispatch(setUser(res.data.user));
+      });
+  };
+}
 
 export function loginCurrentUser(email: string, password: string) {
   return async (dispatch: any) => {

@@ -94,11 +94,7 @@ const Order = () => {
   };
 
   const onFinish = (values: any) => {
-    setOrderData({
-      ...orderData,
-      ...values,
-    });
-    dispatch(oderProduct(orderData, userId));
+    dispatch(oderProduct({ ...orderData, ...values }, userId));
     setStage((stage) => stage + 1);
   };
 

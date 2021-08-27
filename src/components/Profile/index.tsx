@@ -1,11 +1,17 @@
 import React from 'react';
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { getUser } from '../../store/selectors';
+import {editCurrentUser} from "../../store/userReducer";
 
 const Profile = () => {
   const user = useSelector(getUser);
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+
+  const saveChanges = (form: any) => {
+    dispatch(editCurrentUser({ ...user, ...form }));
+  }
 
   return (
     <>
@@ -14,7 +20,7 @@ const Profile = () => {
         form={form}
         initialValues={user}
         layout={'vertical'}
-        onFinish={() => null}
+        onFinish={(user) => saveChanges(user)}
       >
         <Space direction={'vertical'} size={0}>
           <Space direction={'horizontal'} size={10}>
