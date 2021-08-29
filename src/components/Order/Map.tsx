@@ -21,8 +21,8 @@ const Map = () => {
   const orderInfo = useSelector(getOrder);
   const { city, address, location } = orderInfo.deleveredFrom;
   const deliverTO = {
-    info: orderInfo.city + ', ' + orderInfo.address,
-    location: { lat: +orderInfo.lat, lng: +orderInfo.lng },
+    info: orderInfo.deleveredTo.city + ', ' + orderInfo.deleveredTo.address,
+    location: { lat: orderInfo.deleveredTo.location.lat, lng: orderInfo.deleveredTo.location.lng },
   };
   const deliverFrom = {
     info: city + ', ' + address,
@@ -35,6 +35,7 @@ const Map = () => {
   if (!isLoaded) {
     return <div>Loading</div>;
   }
+  console.log(orderInfo.deleveredFrom.location.lng);
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}

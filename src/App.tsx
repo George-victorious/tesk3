@@ -47,7 +47,7 @@ function App() {
 
           <Route exact path={homePageRote} component={UserBuys} />
           <Route exact path={adminPageRote} component={AdminPage} />
-          <Route path={adminPageUserListRote} render={AdminUserBuys} />
+          <Route path={adminPageUserListRote} component={AdminUserBuys} />
           <Route path={orderPageRote} component={Order} />
           <Route exact path={profilePageRote} component={Profile} />
         </Content>

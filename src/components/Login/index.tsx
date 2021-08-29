@@ -8,15 +8,15 @@ import { useForm } from 'antd/lib/form/Form';
 
 const Login = () => {
   const [form] = useForm();
-  const email = 'georgi.filipov@com';
-  const password = 'qwerty1';
+  const email = 'alex.sabadash@lever.com';
+  const password = 'asdfgh2';
   const dispatch = useDispatch();
 
   return (
     <div className={'login-container'}>
       <div className={'popup-container'}>
-        <Typography.Text>alex.sabadash@com asdfgh2 - admin</Typography.Text>
-        <Typography.Text>georgi.filipov@com qwerty1 - user</Typography.Text>
+        <Typography.Text>alex.sabadash@lever.com asdfgh2 - admin</Typography.Text>
+        <Typography.Text>georgi.filipov@lever.com qwerty1 - user</Typography.Text>
         <Form
           form={form}
           initialValues={{ email: email, password: password }}
