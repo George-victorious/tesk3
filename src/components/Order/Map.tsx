@@ -35,7 +35,6 @@ const Map = () => {
   if (!isLoaded) {
     return <div>Loading</div>;
   }
-  console.log(orderInfo.deleveredFrom.location.lng);
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
