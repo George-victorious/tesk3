@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {} from './types';
 import axios from 'axios';
 import {
   loginRoute,
@@ -27,23 +26,23 @@ import {
 //   password: string;
 // };
 
-type TCurrentUser = {
-  id: number;
-  login: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  role: string;
-  token: string;
-  authorized: boolean;
-};
+// type TCurrentUser = {
+//   id: number;
+//   login: string;
+//   firstName: string;
+//   lastName: string;
+//   password: string;
+//   role: string;
+//   token: string;
+//   authorized: boolean;
+// };
 // type TSetUser = {
 //   type: string;
 //   payload: userLogPas;
 // };
 
 type TInitStateCurUserReducer = {
-  user: null | TCurrentUser;
+  user: any;
   isError: {
     isLoginError: boolean;
     isPasswordError: boolean;
@@ -73,12 +72,9 @@ const userReducer = createSlice({
 
 export function editCurrentUser(user: any) {
   return async (dispatch: any) => {
-    await axios
-      .post(userRoute, user
-      )
-      .then((res) => {
-        dispatch(setUser(res.data.user));
-      });
+    await axios.post(userRoute, user).then((res) => {
+      dispatch(setUser(res.data.user));
+    });
   };
 }
 

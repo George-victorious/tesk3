@@ -15,6 +15,7 @@ const Header = (props: any) => {
   const dispatch = useDispatch();
 
   const logout = () => {
+    localStorage.removeItem('user');
     dispatch(unsetUser());
   };
 

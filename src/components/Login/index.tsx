@@ -7,10 +7,21 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'antd/lib/form/Form';
 
 const Login = () => {
+
+  const getUserFromLocalStore = (): any => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : {email: '', password: ''};
+  };
+
   const [form] = useForm();
-  const email = 'alex.sabadash@lever.com';
-  const password = 'asdfgh2';
+  const { email, password } = getUserFromLocalStore();
   const dispatch = useDispatch();
+
+  const onLogin = (form: any) => dispatch(loginCurrentUser(form.email, form.password));
+
+  if(email && password) {
+    onLogin({email, password})
+  }
 
   return (
     <div className={'login-container'}>
@@ -20,7 +31,7 @@ const Login = () => {
         <Form
           form={form}
           initialValues={{ email: email, password: password }}
-          onFinish={(form) => dispatch(loginCurrentUser(form.email, form.password))}
+          onFinish={onLogin}
         >
           <Form.Item
             key={'email'}
@@ -46,7 +57,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input placeholder={'password'} />
+            <Input type={'password'} placeholder={'password'} />
           </Form.Item>
           <Form.Item>
             <Button type={'primary'} htmlType={'submit'}>

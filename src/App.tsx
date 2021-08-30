@@ -24,8 +24,24 @@ import {
   registrationPageRote,
 } from './variables/pageRoutes';
 
+function usePrevious(value: any) {
+  const ref = React.useRef();
+  React.useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 function App() {
   const user = useSelector(getUser);
+  const prevUser = usePrevious(user);
+
+  if (!prevUser && user) {
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ email: user.email, password: user.password })
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -44,12 +60,15 @@ function App() {
         <Content className={'main-content'}>
           <Route path={loginPageRote} component={Login} />
           <Route path={registrationPageRote} component={Registration} />
-
-          <Route exact path={homePageRote} component={UserBuys} />
-          <Route exact path={adminPageRote} component={AdminPage} />
-          <Route path={adminPageUserListRote} component={AdminUserBuys} />
-          <Route path={orderPageRote} component={Order} />
-          <Route exact path={profilePageRote} component={Profile} />
+          {user && (
+            <>
+              <Route exact path={homePageRote} component={UserBuys} />
+              <Route exact path={adminPageRote} component={AdminPage} />
+              <Route path={adminPageUserListRote} component={AdminUserBuys} />
+              <Route path={orderPageRote} component={Order} />
+              <Route exact path={profilePageRote} component={Profile} />
+            </>
+          )}
         </Content>
       </Layout>
     </BrowserRouter>
