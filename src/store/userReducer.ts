@@ -6,41 +6,6 @@ import {
   userRoute,
 } from '../variables/serverRequests';
 
-// const serverUsers = [
-//   {
-//     id: 1,
-//     gender: 0,
-//     email: 'georgi.filipov@com',
-//     firstName: 'Georgi',
-//     middleName: 'Igorevich',
-//     lastName: 'Filipov',
-//     phone: '+375441234567',
-//     password: 'qwerty1',
-//     role: 'user',
-//     token: 'qwerty1',
-//   },
-// ];
-
-// type userLogPas = {
-//   login: string;
-//   password: string;
-// };
-
-// type TCurrentUser = {
-//   id: number;
-//   login: string;
-//   firstName: string;
-//   lastName: string;
-//   password: string;
-//   role: string;
-//   token: string;
-//   authorized: boolean;
-// };
-// type TSetUser = {
-//   type: string;
-//   payload: userLogPas;
-// };
-
 type TInitStateCurUserReducer = {
   user: any;
   isError: {
