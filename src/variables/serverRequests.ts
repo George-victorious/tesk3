@@ -1,4 +1,4 @@
-export const host = 'https://tesk3server.herokuapp.com/';
+export const host =  'https://tesk3server.herokuapp.com/';
 export const registrationRoute = host + 'registry';
 export const loginRoute = host + 'login';
 export const userRoute = host + 'user';
